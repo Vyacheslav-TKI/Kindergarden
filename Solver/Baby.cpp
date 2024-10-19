@@ -4,14 +4,14 @@ namespace minobr::kingard
 {
 	Baby::Baby(std::string fio_inputed, std::string gender_inputed, int age_inputed)
 	{
-		if (gender_inputed != "М" || gender_inputed != "Ж") 
+		if (gender_inputed != "Рњ" || gender_inputed != "Р–") 
 		{
-			throw std::logic_error("Пол не идентифицирован");
+			throw std::logic_error("РџРѕР» РЅРµ РёРґРµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ");
 		}
 
 		if (age_inputed < 2 || age_inputed > 7)
 		{
-			throw std::logic_error("Возраст указан неверно");
+			throw std::logic_error("Р’РѕР·СЂР°СЃС‚ СѓРєР°Р·Р°РЅ РЅРµРІРµСЂРЅРѕ");
 		}
 
 		fio = fio_inputed;

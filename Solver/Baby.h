@@ -7,12 +7,12 @@ namespace minobr::kingard
 	public:
 
 		/**
-		* @brief Конструктор
+		* @brief РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
 		*/
 		Baby(std::string fio_inputed, std::string gender_inputed, int age_inputed);
 
 		/**
-		* @brief оператор вывода
+		* @brief РѕРїРµСЂР°С‚РѕСЂ РІС‹РІРѕРґР°
 		*/
 		friend std::ostream& operator << (std::ostream& os, const Baby& baby);
 

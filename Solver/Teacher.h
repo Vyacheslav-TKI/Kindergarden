@@ -6,7 +6,7 @@ namespace minobr::kingard
 	{
 	public:
 		/**
-		* @brief Конструктор
+		* @brief РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
 		*/
 		Teacher(std::string fio_inputed, std::string gender_inputed, int age_inputed, int id_inputed);
 
