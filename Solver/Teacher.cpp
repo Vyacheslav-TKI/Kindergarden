@@ -11,11 +11,6 @@ namespace minobr::kingard
 			throw std::logic_error("Пол не идентифицирован");
 		}
 
-		if (age_inputed < 18 || age_inputed > 60)
-		{
-			throw std::logic_error("Возраст указан неверно");
-		}
-
 		if (id_inputed < 0)
 		{
 			throw std::underflow_error("ID указан неверно");

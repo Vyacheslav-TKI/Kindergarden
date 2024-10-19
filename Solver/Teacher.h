@@ -12,12 +12,12 @@ namespace minobr::kingard
 
 	private:
 
-		std::string fio;
+		const std::string fio;
 
-		std::string gender;
+		const std::string gender;
 
-		size_t age;
+		const size_t age;
 
-		size_t id;
+		const size_t id;
 	};
 }
