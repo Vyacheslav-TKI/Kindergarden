@@ -18,6 +18,14 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Baby.h" />
+    <ClInclude Include="Teacher.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Baby.cpp" />
+    <ClCompile Include="Teacher.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
