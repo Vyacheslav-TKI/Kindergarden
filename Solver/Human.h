@@ -12,7 +12,7 @@ namespace minobr::kingard
 
 	public:
 		/**
-		* @brief Конструктор
+		* @brief РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
 		*/
 		Human(int a, const std::string& fam, char g);
 
