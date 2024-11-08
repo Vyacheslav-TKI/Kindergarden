@@ -11,6 +11,9 @@ namespace minobr::kingard
 		char gender;
 
 	public:
+		/**
+		* @brief Конструктор
+		*/
 		Human(int a, const std::string& fam, char g);
 
 	};
