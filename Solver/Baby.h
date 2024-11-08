@@ -1,8 +1,9 @@
 #pragma once
-# include <string>
+#include <string>
+#include "Human.h"
 namespace minobr::kingard
 {
-	class Baby
+	class Baby : public Human
 	{
 	public:
 
@@ -15,14 +16,6 @@ namespace minobr::kingard
 		* @brief оператор вывода
 		*/
 		friend std::ostream& operator << (std::ostream& os, const Baby& baby);
-
-	private:
-
-		std::string fio;
-
-		std::string gender;
-
-		size_t age;
 
 	};
 }
