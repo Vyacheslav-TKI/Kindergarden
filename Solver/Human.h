@@ -5,6 +5,11 @@ namespace minobr::kingard
 {
 	class Human
 	{
+	private:
+
+		char male = 'М';
+		char female = 'Ж';
+
 	protected:
 		int age;
 		std::string fio;
@@ -14,7 +19,7 @@ namespace minobr::kingard
 		/**
 		* @brief Конструктор
 		*/
-		Human(int a, const std::string& fam, char g);
+		Human(int age, const std::string& name, char is_gender);
 
 	};
 

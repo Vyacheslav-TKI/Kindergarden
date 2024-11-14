@@ -4,7 +4,7 @@ namespace minobr::kingard
 {
 	Baby::Baby(std::string fio_inputed, std::string gender_inputed, int age_inputed) : Human(age_inputed, fio_inputed, gender_inputed)
 	{
-		if (age_inputed < 2 || age_inputed > 7)
+		if (age_inputed < min_age || age_inputed > max_age)
 		{
 			throw std::logic_error("Возраст указан неверно");
 		}

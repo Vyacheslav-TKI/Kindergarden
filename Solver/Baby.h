@@ -5,6 +5,11 @@ namespace minobr::kingard
 {
 	class Baby : public Human
 	{
+	private:
+
+		int min_age = 2;
+		int max_age = 7; 
+
 	public:
 
 		/**

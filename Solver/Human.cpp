@@ -3,16 +3,14 @@
 
 namespace minobr::kingard
 {
-	Human::Human(int a, const std::string& fam, char g) : fio(fam)
+	Human::Human(int age_old, const std::string& name, char is_gender) : fio(name)
 	{
-		if (a < 0)
-			throw std::out_of_range("Íåïğàâèëüíî óêàçàí âîçğàñò");
-		char m, j;
-		m = 'Ì';
-		g = 'Æ';
-		if (g != m || g != j)
-			throw std::logic_error("Íåïğàâèëüíî óêàçàí ïîë");
-		age = static_cast<size_t>(a);
-		gender = g;
+		if (age_old < 0)
+			throw std::out_of_range("ĞĞµĞ¿Ñ€Ğ°Ğ²Ğ¸Ğ»ÑŒĞ½Ğ¾ ÑƒĞºĞ°Ğ·Ğ°Ğ½ Ğ²Ğ¾Ğ·Ñ€Ğ°ÑÑ‚");
+
+		if (is_gender != male || is_gender != female)
+			throw std::logic_error("ĞĞµĞ¿Ñ€Ğ°Ğ²Ğ¸Ğ»ÑŒĞ½Ğ¾ ÑƒĞºĞ°Ğ·Ğ°Ğ½ Ğ¿Ğ¾Ğ»");
+		age = static_cast<size_t>(age_old);
+		gender = is_gender;
 	}
 }
