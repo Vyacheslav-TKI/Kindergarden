@@ -4,7 +4,7 @@ namespace minobr::kingard
 {
 	void Schedule::set_schedule(const std::string& day, const std::shared_ptr<Group>& group, const std::vector<std::string>& activities) {
 		if (!group) {
-			throw std::invalid_argument("Не найдено такой группы");
+			throw std::invalid_argument("РќРµ РЅР°Р№РґРµРЅРѕ С‚Р°РєРѕР№ РіСЂСѓРїРїС‹");
 		}
 
 		
@@ -14,7 +14,7 @@ namespace minobr::kingard
 
 	const std::vector<std::string>& Schedule::get_group_schedule(const std::string& day, const std::shared_ptr<Group>& group) const {
 		if (!group) {
-			throw std::invalid_argument("Не найдено такой группы");
+			throw std::invalid_argument("РќРµ РЅР°Р№РґРµРЅРѕ С‚Р°РєРѕР№ РіСЂСѓРїРїС‹");
 		}
 
 		const std::string& group_name = group->to_string(); 
@@ -33,8 +33,8 @@ namespace minobr::kingard
 		std::ostringstream oss;
 
 		for (const auto& [key, activities] : group_schedule) {
-			oss << "День и группа " << key << "\n";
-			oss << "Занятия:\n";
+			oss << "Р”РµРЅСЊ Рё РіСЂСѓРїРїР° " << key << "\n";
+			oss << "Р—Р°РЅСЏС‚РёСЏ:\n";
 			for (const auto& activity : activities) {
 				oss << "  - " << activity << "\n";
 			}

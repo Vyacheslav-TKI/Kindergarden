@@ -15,14 +15,14 @@ namespace ScheduleTests
         TEST_METHOD(TestSetAndGetSchedule)
         {
             
-            auto teacher = std::make_shared<Teacher>("Иванов Иван Васильевич", "М", 30, 1);
+            auto teacher = std::make_shared<Teacher>("РРІР°РЅРѕРІ РРІР°РЅ Р’Р°СЃРёР»СЊРµРІРёС‡", "Рњ", 30, 1);
 
             
-            auto group = std::make_shared<Group>("Группа 1", teacher);
+            auto group = std::make_shared<Group>("Р“СЂСѓРїРїР° 1", teacher);
 
             
-            auto baby1 = std::make_shared<Baby>("Широканов Сергей Андреевич", "М", 5);
-            auto baby2 = std::make_shared<Baby>("Сидорова Мария Олеговна", "Ж", 6);
+            auto baby1 = std::make_shared<Baby>("РЁРёСЂРѕРєР°РЅРѕРІ РЎРµСЂРіРµР№ РђРЅРґСЂРµРµРІРёС‡", "Рњ", 5);
+            auto baby2 = std::make_shared<Baby>("РЎРёРґРѕСЂРѕРІР° РњР°СЂРёСЏ РћР»РµРіРѕРІРЅР°", "Р–", 6);
             group->add_child(baby1);
             group->add_child(baby2);
 
@@ -30,35 +30,35 @@ namespace ScheduleTests
             Schedule schedule;
 
             
-            std::vector<std::string> activities = { "ИЗО", "Пение", "Технология" };
-            schedule.set_schedule("Понедельник", group, activities);
+            std::vector<std::string> activities = { "РР—Рћ", "РџРµРЅРёРµ", "РўРµС…РЅРѕР»РѕРіРёСЏ" };
+            schedule.set_schedule("РџРѕРЅРµРґРµР»СЊРЅРёРє", group, activities);
 
             
-            const auto& retrieved_activities = schedule.get_group_schedule("Понедельник", group);
+            const auto& retrieved_activities = schedule.get_group_schedule("РџРѕРЅРµРґРµР»СЊРЅРёРє", group);
 
             
-            Assert::AreEqual(size_t(3), retrieved_activities.size(), L"Количество занятий должно быть 3.");
-            Assert::AreEqual(std::string("ИЗО"), retrieved_activities[0], L"Первое занятие должно быть ИЗО.");
-            Assert::AreEqual(std::string("Пение"), retrieved_activities[1], L"Второе занятие должно быть Пение.");
-            Assert::AreEqual(std::string("Технология"), retrieved_activities[2], L"Третье занятие должно быть Технология.");
+            Assert::AreEqual(size_t(3), retrieved_activities.size(), L"РљРѕР»РёС‡РµСЃС‚РІРѕ Р·Р°РЅСЏС‚РёР№ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ 3.");
+            Assert::AreEqual(std::string("РР—Рћ"), retrieved_activities[0], L"РџРµСЂРІРѕРµ Р·Р°РЅСЏС‚РёРµ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РР—Рћ.");
+            Assert::AreEqual(std::string("РџРµРЅРёРµ"), retrieved_activities[1], L"Р’С‚РѕСЂРѕРµ Р·Р°РЅСЏС‚РёРµ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РџРµРЅРёРµ.");
+            Assert::AreEqual(std::string("РўРµС…РЅРѕР»РѕРіРёСЏ"), retrieved_activities[2], L"РўСЂРµС‚СЊРµ Р·Р°РЅСЏС‚РёРµ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РўРµС…РЅРѕР»РѕРіРёСЏ.");
         }
 
         TEST_METHOD(TestEmptySchedule)
         {
             
-            auto teacher = std::make_shared<Teacher>("Василенко Данил Вячеславович", "М", 30, 1);
+            auto teacher = std::make_shared<Teacher>("Р’Р°СЃРёР»РµРЅРєРѕ Р”Р°РЅРёР» Р’СЏС‡РµСЃР»Р°РІРѕРІРёС‡", "Рњ", 30, 1);
 
             
-            auto group = std::make_shared<Group>("Группа 2", teacher);
+            auto group = std::make_shared<Group>("Р“СЂСѓРїРїР° 2", teacher);
 
             
             Schedule schedule;
 
             
-            const auto& retrieved_activities = schedule.get_group_schedule("Вторник", group);
+            const auto& retrieved_activities = schedule.get_group_schedule("Р’С‚РѕСЂРЅРёРє", group);
 
             
-            Assert::IsTrue(retrieved_activities.empty(), L"Расписание для вторника должно быть пустым.");
+            Assert::IsTrue(retrieved_activities.empty(), L"Р Р°СЃРїРёСЃР°РЅРёРµ РґР»СЏ РІС‚РѕСЂРЅРёРєР° РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РїСѓСЃС‚С‹Рј.");
         }
 
         TEST_METHOD(TestInvalidGroupPointer)
@@ -69,17 +69,17 @@ namespace ScheduleTests
            
             try
             {
-                std::vector<std::string> activities = { "ИЗО", "Пение", "Технология" };
-                schedule.set_schedule("Среда", nullptr, activities);
-                Assert::Fail(L"Должно быть выброшено исключение для nullptr группы.");
+                std::vector<std::string> activities = { "РР—Рћ", "РџРµРЅРёРµ", "РўРµС…РЅРѕР»РѕРіРёСЏ" };
+                schedule.set_schedule("РЎСЂРµРґР°", nullptr, activities);
+                Assert::Fail(L"Р”РѕР»Р¶РЅРѕ Р±С‹С‚СЊ РІС‹Р±СЂРѕС€РµРЅРѕ РёСЃРєР»СЋС‡РµРЅРёРµ РґР»СЏ nullptr РіСЂСѓРїРїС‹.");
             }
             catch (const std::invalid_argument& e)
             {
-                Assert::AreEqual("Пустой указатель группы", std::string(e.what()), L"Исключение должно сообщать о null указателе.");
+                Assert::AreEqual("РџСѓСЃС‚РѕР№ СѓРєР°Р·Р°С‚РµР»СЊ РіСЂСѓРїРїС‹", std::string(e.what()), L"РСЃРєР»СЋС‡РµРЅРёРµ РґРѕР»Р¶РЅРѕ СЃРѕРѕР±С‰Р°С‚СЊ Рѕ null СѓРєР°Р·Р°С‚РµР»Рµ.");
             }
             catch (...)
             {
-                Assert::Fail(L"Исключение должно быть типа std::invalid_argument.");
+                Assert::Fail(L"РСЃРєР»СЋС‡РµРЅРёРµ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ С‚РёРїР° std::invalid_argument.");
             }
         }
     };

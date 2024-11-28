@@ -26,7 +26,7 @@ namespace minobr::kingard
 
 		int male_count = 0;
 		for (const auto& baby : babies) {
-			if (baby->gender == 'Ì') {
+			if (baby->gender == 'Ðœ') {
 				male_count++;
 			}
 		}
@@ -58,10 +58,10 @@ namespace minobr::kingard
 	std::string Group::to_string() const {
 		std::ostringstream oss;
 
-		oss << "Èìÿ ãðóïïû: " << name_group << "\n";
+		oss << "Ð˜Ð¼Ñ Ð³Ñ€ÑƒÐ¿Ð¿Ñ‹: " << name_group << "\n";
 
-		oss << "Âîñïèòàòåëü: " << (get_teacher()->fio) << "\n";
+		oss << "Ð’Ð¾ÑÐ¿Ð¸Ñ‚Ð°Ñ‚ÐµÐ»ÑŒ: " << (get_teacher()->fio) << "\n";
 
-		oss << "Ñîîòíîøåíèå ìàëü÷èêîâ è äåâî÷åê(â %): " << male_female_ratio() << "\n";
+		oss << "Ð¡Ð¾Ð¾Ñ‚Ð½Ð¾ÑˆÐµÐ½Ð¸Ðµ Ð¼Ð°Ð»ÑŒÑ‡Ð¸ÐºÐ¾Ð² Ð¸ Ð´ÐµÐ²Ð¾Ñ‡ÐµÐº(Ð² %): " << male_female_ratio() << "\n";
 	}
 }
