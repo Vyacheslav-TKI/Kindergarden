@@ -1,5 +1,6 @@
 #pragma once
 #include <map>
+#include "Group.h"
 #include <vector>
 #include <string>
 #include <sstream>
@@ -14,17 +15,17 @@ namespace minobr::kingard
 		/**
 		* @brief устанавливает занятия на заданный день в заданной группе
 		* @param day заданный день
-		* @param inputed_group_name заданная группа
+		* @param group заданная группа
 		* @param activities занятия
 		*/
-		void set_schedule(const std::string& day, const std::string& inputed_group_name, const std::vector<std::string>& activities);
+		void set_schedule(const std::string& day, const std::shared_ptr<Group>& group, const std::vector<std::string>& activities);
 
 		/**
 		* @brief показывает занятость группы на данный день
 		* @param day введенный день
-		* @param inputed_group_name заданная группа
+		* @param group заданная группа
 		*/
-		const std::vector<std::string>& get_group_schedule(const std::string& day, const std::string& inputed_group_name) const;
+		const std::vector<std::string>& get_group_schedule(const std::string& day, const std::shared_ptr<Group>& group) const;
 
 		/**
 		* @brief сериализация в строку

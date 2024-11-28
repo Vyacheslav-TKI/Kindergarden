@@ -11,8 +11,8 @@ namespace minobr::kingard {
 	private:
 
 		std::string name_group;
-		std::vector<std::unique_ptr<Baby>> babies;
-		Teacher* teacher;
+		std::vector<std::shared_ptr<Baby>> babies; 
+		std::shared_ptr<Teacher> teacher;
 
 	public:
 
@@ -21,23 +21,23 @@ namespace minobr::kingard {
 		* @param name имя группы
 		* @param educator указатель на элемент класса учитель
 		*/
-		Group(std::string& name, Teacher* educator);
+		Group(const std::string& name, const std::shared_ptr<Teacher>& educator);
 
 		/**
 		* @brief функция добавления детей в группу
 		* @param child умный указатель на элемент класса Baby
 		*/
-		void add_child(std::unique_ptr<Baby> child);
+		void add_child(const std::shared_ptr<Baby>& child);
 
 		/**
 		* @brief выводит список детей данной группы
 		*/
-		const std::vector<std::unique_ptr<Baby>>& get_children() const;
+		const std::vector<std::shared_ptr<Baby>>& get_children() const;
 
 		/**
 		* @brief выводит прикрепленного учителя
 		*/
-		Teacher* get_teacher() const;
+		std::shared_ptr<Teacher> get_teacher() const;
 
 		/**
 		* @brief вычисляет соотношение мальчиков и девочек в группе
@@ -47,7 +47,7 @@ namespace minobr::kingard {
 		/**
 		* @brief вывод списка детей по возрасту
 		*/
-		const std::vector<std::unique_ptr<Baby>>& get_children_by_age(int inputed_age);
+		std::vector<std::shared_ptr<Baby>> get_children_by_age(int inputed_age) const;
 
 		/**
 		* @brief объединеный метод сериализации в строку

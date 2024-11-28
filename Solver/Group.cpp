@@ -3,19 +3,19 @@
 
 namespace minobr::kingard
 {
-	Group::Group(std::string& name, Teacher* educator)
+	Group::Group(const std::string& name, const std::shared_ptr<Teacher>& educator)
 		: name_group(name), teacher(educator) {
 	}
 
-	void Group::add_child(std::unique_ptr<Baby> child) {
-		babies.push_back(std::move(child));
+	void Group::add_child(const std::shared_ptr<Baby>& child) {
+		babies.push_back(child);
 	}
 	
-	const std::vector<std::unique_ptr<Baby>>& Group::get_children() const {
+	const std::vector<std::shared_ptr<Baby>>& Group::get_children() const {
 		return babies;
 	}
 
-	Teacher* Group::get_teacher() const {
+	std::shared_ptr<Teacher> Group::get_teacher() const {
 		return teacher;
 	}
 
@@ -39,14 +39,17 @@ namespace minobr::kingard
 		return (male_count / female_count) * 100;
 	}
 
-	const std::vector<std::unique_ptr<Baby>>& Group::get_children_by_age(int inputed_age) {
-		static std::vector<std::unique_ptr<Baby>> filtered_children;
-		filtered_children.clear();
+	std::vector<std::shared_ptr<Baby>> Group::get_children_by_age(int inputed_age) const {
+		std::vector<std::shared_ptr<Baby>> filtered_children;
 
-		for (const auto& baby : babies) {
-			if (baby->age == inputed_age) { 
-				filtered_children.push_back(std::make_unique<Baby>(*baby));
-			}
+		auto it = babies.begin();
+		while ((it = std::find_if(it, babies.end(), [inputed_age](const std::shared_ptr<Baby>& baby) 
+			{
+				return baby->age() == inputed_age;
+			})) != babies.end()) 
+		{
+			filtered_children.push_back(*it); 
+			++it;
 		}
 
 		return filtered_children;

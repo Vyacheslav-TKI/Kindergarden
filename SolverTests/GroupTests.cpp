@@ -6,7 +6,7 @@
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace minobr::kingard;
 
-namespace Tests
+namespace GroupTests
 {
     TEST_CLASS(GroupTests)
     {
@@ -15,85 +15,93 @@ namespace Tests
         TEST_METHOD(TestAddChild)
         {
             
-            std::string teacher_name = "Mr. Smith";
-            std::string teacher_gender = "М";
-            Teacher teacher(teacher_name, teacher_gender, 35, 1);
+            auto teacher = std::make_shared<Teacher>("Черенцов Александр Глебович", "М", 30, 1);
 
             
-            std::string group_name = "Sunshine";
-            Group group(group_name, &teacher);
+            Group group("Группа Крови", teacher.get());
 
             
-            group.add_child(std::make_unique<Baby>("Alice", "Ж", 5));
+            auto baby1 = std::make_shared<Baby>("Романов Петр Петрович", "М", 5);
+            auto baby2 = std::make_shared<Baby>("Сидорова Мария Олеговна", "Ж", 6);
+            group.add_child(baby1);
+            group.add_child(baby2);
 
             
-            Assert::AreEqual(size_t(1), group.get_children().size());
-        }
-
-        TEST_METHOD(TestGetChildrenByAge)
-        {
-            
-            std::string teacher_name = "Ms. Johnson";
-            std::string teacher_gender = "Ж";
-            Teacher teacher(teacher_name, teacher_gender, 40, 2);
-
-            
-            std::string group_name = "Stars";
-            Group group(group_name, &teacher);
-
-            
-            group.add_child(std::make_unique<Baby>("Bob", "М", 4));
-            group.add_child(std::make_unique<Baby>("Charlie", "М", 5));
-            group.add_child(std::make_unique<Baby>("Daisy", "Ж", 4));
-
-            
-            auto children_age_4 = group.get_children_by_age(4);
-
-            
-            Assert::AreEqual(size_t(2), children_age_4.size());
+            const auto& children = group.get_children();
+            Assert::AreEqual(size_t(2), children.size(), L"Количество детей в группе должно быть 2.");
         }
 
         TEST_METHOD(TestMaleFemaleRatio)
         {
             
-            std::string teacher_name = "Ms. Lee";
-            std::string teacher_gender = "Ж";
-            Teacher teacher(teacher_name, teacher_gender, 30, 3);
+            auto teacher = std::make_shared<Teacher>("Уланов Сергей Алексеевич", "М", 30, 1);
 
             
-            std::string group_name = "Rainbow";
-            Group group(group_name, &teacher);
+            Group group("Группа 2", teacher.get());
 
             
-            group.add_child(std::make_unique<Baby>("Eve", "Ж", 5));
-            group.add_child(std::make_unique<Baby>("Frank", "М", 6));
+            auto baby1 = std::make_shared<Baby>("Попов Владислав Андреевич", "М", 5);
+            auto baby2 = std::make_shared<Baby>("Зайцев Михаил Владимирович", "М", 4);
+            auto baby3 = std::make_shared<Baby>("Филлипова Валерия Николаевна", "Ж", 6);
+            group.add_child(baby1);
+            group.add_child(baby2);
+            group.add_child(baby3);
 
             
-            Assert::AreEqual(1.0, group.male_female_ratio());
+            double ratio = group.male_female_ratio();
+            Assert::AreEqual(2.0, ratio, L"Соотношение мальчиков к девочкам должно быть 2:1.");
         }
 
-        TEST_METHOD(TestToString)
+        TEST_METHOD(TestGetChildrenByAge)
+        {
+           
+            auto teacher = std::make_shared<Teacher>("Петрова Анна Владимировна", "Ж", 35, 2);
+
+            
+            Group group("Группа 3", teacher.get());
+
+            
+            auto baby1 = std::make_shared<Baby>("Попов Владислав Андреевич", "М", 5);
+            auto baby2 = std::make_shared<Baby>("Зайцев Михаил Владимирович", "М", 4);
+            auto baby3 = std::make_shared<Baby>("Сидорова Мария Олеговна", "Ж", 5);
+            group.add_child(baby1);
+            group.add_child(baby2);
+            group.add_child(baby3);
+
+            
+            auto children_age_5 = group.get_children_by_age(5);
+
+            
+            Assert::AreEqual(size_t(2), children_age_5.size(), L"Должно быть 2 ребёнка возраста 5 лет.");
+            Assert::AreEqual(std::string("Попов Владислав Андреевич"), children_age_5[0]->fio, L"Первый ребёнок должен быть Попов Владислав Андреевич.");
+            Assert::AreEqual(std::string("Сидорова Мария Олеговна"), children_age_5[1]->fio, L"Второй ребёнок должен быть Сидорова Мария Олеговна.");
+        }
+
+        TEST_METHOD(TestGetTeacher)
         {
             
-            std::string teacher_name = "Ms. Johnson";
-            std::string teacher_gender = "Ж";
-            Teacher teacher(teacher_name, teacher_gender, 40, 2);
+            auto teacher = std::make_shared<Teacher>("Бедарев Андрей Валерьевич", "М", 30, 1);
 
             
-            std::string group_name = "Stars";
-            Group group(group_name, &teacher);
+            Group group("Группа 4", teacher.get());
 
             
-            group.add_child(std::make_unique<Baby>("Bob", "М", 4));
-            group.add_child(std::make_unique<Baby>("Charlie", "М", 5));
+            auto assigned_teacher = group.get_teacher();
+            Assert::IsNotNull(assigned_teacher, L"Учитель должен быть прикреплён к группе.");
+            Assert::AreEqual(std::string("Бедарев Андрей Валерьевич"), assigned_teacher->fio, L"Имя учителя должно быть Бедарев Андрей Валерьевич.");
+        }
+
+        TEST_METHOD(TestEmptyGroup)
+        {
+            
+            auto teacher = std::make_shared<Teacher>("Зеленова Ольга Алексеевна", "Ж", 35, 2);
 
             
-            std::string group_string = group.to_string();
+            Group group("Группа 5", teacher.get());
 
             
-            Assert::IsTrue(group_string.find("Group Name: Stars") != std::string::npos);
-            Assert::IsTrue(group_string.find("Bob") != std::string::npos);
-            Assert::IsTrue(group_string.find("Charlie") != std::string::npos);
+            const auto& children = group.get_children();
+            Assert::AreEqual(size_t(0), children.size(), L"Группа должна быть пустой.");
         }
     };
 }
