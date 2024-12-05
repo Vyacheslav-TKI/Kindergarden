@@ -1,6 +1,9 @@
 #pragma once
 #include <string>
 #include "Human.h"
+#include "Group.h"
+#include <memory>
+
 namespace minobr::kingard
 {
 	class Baby : public Human
@@ -9,6 +12,7 @@ namespace minobr::kingard
 
 		int min_age = 2;
 		int max_age = 7; 
+		std::weak_ptr<Group> group;
 
 	public:
 
@@ -21,6 +25,11 @@ namespace minobr::kingard
 		* @brief оператор вывода
 		*/
 		friend std::ostream& operator << (std::ostream& os, const Baby& baby);
+
+		/**
+		* @brief Прикрепляет ребенка к определенной группе
+		*/
+		void set_group(const std::shared_ptr<Group>& group)
 
 	};
 }

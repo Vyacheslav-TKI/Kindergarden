@@ -1,5 +1,4 @@
 #pragma once
-#include <map>
 #include "Group.h"
 #include <vector>
 #include <string>
@@ -7,25 +6,33 @@
 
 namespace minobr::kingard
 {
+	struct Schedule_entry {
+		std::string group;
+		std::string day; 
+		std::string activity;
+	};
+
 	class Schedule
 	{
 	private:
-		std::map<std::string, std::vector<std::string>> group_schedule;
+		std::vector<Schedule_entry> entries;
 	public:
-		/**
-		* @brief устанавливает занятия на заданный день в заданной группе
-		* @param day заданный день
-		* @param group заданная группа
-		* @param activities занятия
-		*/
-		void set_schedule(const std::string& day, const std::shared_ptr<Group>& group, const std::vector<std::string>& activities);
-
 		/**
 		* @brief показывает занятость группы на данный день
 		* @param day введенный день
 		* @param group заданная группа
 		*/
-		const std::vector<std::string>& get_group_schedule(const std::string& day, const std::shared_ptr<Group>& group) const;
+		std::vector<std::string> get_activities_for_group(const std::string& group, const std::string& day) const;
+
+		/**
+		* @brief создает новый объект структуры Schedule_entry
+		*/
+		void add_entry(const std::string& group, const std::string& day, const std::string& activity);
+
+		/**
+		* @brief удаляет объект структуры Schedule_entry
+		*/
+		void remove_entry(const std::string& group, const std::string& day);
 
 		/**
 		* @brief сериализация в строку

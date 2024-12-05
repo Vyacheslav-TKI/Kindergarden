@@ -1,6 +1,9 @@
 #pragma once
 #include <string>
+#include <memory>
 #include "Human.h"
+#include "Group.h"
+
 namespace minobr::kingard
 {
 	class Teacher : public Human
@@ -13,5 +16,6 @@ namespace minobr::kingard
 
 	private:
 		size_t id;
+		std::weak_ptr<Group> assigned_group;
 	};
 }

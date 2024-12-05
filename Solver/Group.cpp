@@ -9,8 +9,19 @@ namespace minobr::kingard
 
 	void Group::add_child(const std::shared_ptr<Baby>& child) {
 		babies.push_back(child);
+		child->set_group(shared_from_this());
 	}
 	
+	std::optional<std::shared_ptr<Baby>> Group::get_baby_at() const
+	{
+		if (!babies.empty()) {
+			return babies[0];
+		}
+		else {
+			return std::nullopt; 
+		}
+	}
+
 	const std::vector<std::shared_ptr<Baby>>& Group::get_children() const {
 		return babies;
 	}

@@ -1,45 +1,61 @@
 #include "Schedule.h"
+#include <iomanip>
 
 namespace minobr::kingard
 {
-	void Schedule::set_schedule(const std::string& day, const std::shared_ptr<Group>& group, const std::vector<std::string>& activities) {
-		if (!group) {
-			throw std::invalid_argument("Не найдено такой группы");
-		}
-
-		
-		const std::string& group_name = group->to_string(); 
-		group_schedule[day + "_" + group_name] = activities;
+	void Schedule::add_entry(const std::string& group, const std::string& day, const std::string& activity) {
+		entries.push_back({ group, day, activity });
 	}
 
-	const std::vector<std::string>& Schedule::get_group_schedule(const std::string& day, const std::shared_ptr<Group>& group) const {
-		if (!group) {
-			throw std::invalid_argument("Не найдено такой группы");
-		}
-
-		const std::string& group_name = group->to_string(); 
-		const auto& key = day + "_" + group_name;
-
-		auto it = group_schedule.find(key);
-		if (it != group_schedule.end()) {
-			return it->second;
-		}
-
-		static const std::vector<std::string> empty_schedule;
-		return empty_schedule;
+	void Schedule::remove_entry(const std::string& group, const std::string& day) {
+		entries.erase(std::remove_if(entries.begin(), entries.end(),
+			[&](const Schedule_entry& entry) 
+			{
+				return entry.group == group && entry.day == day;
+			}), entries.end());
 	}
 
-	std::string Schedule::to_string() const {
-		std::ostringstream oss;
-
-		for (const auto& [key, activities] : group_schedule) {
-			oss << "День и группа " << key << "\n";
-			oss << "Занятия:\n";
-			for (const auto& activity : activities) {
-				oss << "  - " << activity << "\n";
+	std::vector<std::string> Schedule::get_activities_for_group(const std::string& group, const std::string& day) const {
+		std::vector<std::string> activities;
+		for (const auto& entry : entries) {
+			if (entry.group == group && entry.day == day) {
+				activities.push_back(entry.activity);
 			}
 		}
-
-		return oss.str();
+		return activities;
 	}
+
+    std::string Schedule::to_string() const {
+        std::stringstream ss;
+        if (entries.empty()) {
+            return "Расписание пустое"; 
+        }
+
+        
+        size_t max_group_width = 0;
+        size_t max_day_width = 0;
+        size_t max_activity_width = 0;
+
+        for (const auto& entry : entries) {
+            max_group_width = std::max(max_group_width, entry.group.length());
+            max_day_width = std::max(max_day_width, entry.day.length());
+            max_activity_width = std::max(max_activity_width, entry.activity.length());
+        }
+
+        
+        ss << std::left << std::setw(max_group_width) << "Group" << " | "
+            << std::setw(max_day_width) << "Day" << " | "
+            << "Activity" << "\n";
+        ss << std::string(max_group_width + max_day_width + max_activity_width + 7, '-') << "\n"; 
+
+        
+        for (const auto& entry : entries) {
+            ss << std::left << std::setw(max_group_width) << entry.group << " | "
+                << std::setw(max_day_width) << entry.day << " | "
+                << entry.activity << "\n";
+        }
+
+        return ss.str();
+    }
+
 }

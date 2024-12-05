@@ -2,11 +2,12 @@
 #include <vector>
 #include <memory>
 #include <cmath>
+#include <optional>
 #include "Baby.h"
 #include "Teacher.h"
 
 namespace minobr::kingard {
-	class Group
+	class Group : public std::enable_shared_from_this<Group>
 	{
 	private:
 
@@ -22,6 +23,11 @@ namespace minobr::kingard {
 		* @param educator указатель на элемент класса учитель
 		*/
 		Group(const std::string& name, const std::shared_ptr<Teacher>& educator);
+
+		/**
+		* @brief Проверка на заполненость массива std::vector<std::shared_ptr<Baby>> babies
+		*/
+		std::optional<std::shared_ptr<Baby>> get_baby_at() const;
 
 		/**
 		* @brief функция добавления детей в группу
