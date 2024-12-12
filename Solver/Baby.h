@@ -6,13 +6,13 @@
 
 namespace minobr::kingard
 {
-	class Baby : public Human
+	class Baby : public Human, public std::enable_shared_from_this<Group>
 	{
 	private:
 
 		int min_age = 2;
 		int max_age = 7; 
-		std::weak_ptr<Group> group;
+		std::shared_ptr<Group> group;
 
 	public:
 

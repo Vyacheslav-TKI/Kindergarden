@@ -12,6 +12,7 @@ namespace minobr::kingard
 
 	void Baby::set_group(const std::shared_ptr<Group>& group) {
 		this->group = group;
+		child->set_group(shared_from_this());
 	}
 
 	std::ostream& operator << (std::ostream& os, const Baby& baby)

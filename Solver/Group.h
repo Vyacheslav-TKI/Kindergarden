@@ -12,7 +12,7 @@ namespace minobr::kingard {
 	private:
 
 		std::string name_group;
-		std::vector<std::shared_ptr<Baby>> babies; 
+		std::vector<Baby*> babies; 
 		std::shared_ptr<Teacher> teacher;
 
 	public:
