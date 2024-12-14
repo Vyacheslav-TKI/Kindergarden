@@ -1,35 +1,65 @@
-#include "../Solver/Group.h"
-#include "../Solver/Schedule.h"
+#include <iostream>
 #include <memory>
-#include <iostream> 
+#include <string>
+#include <chrono>
+#include "..\Solver\Baby.h"
+#include "..\Solver\Group.h"
+#include "..\Solver\Teacher.h"
+#include "..\Solver\Schedule.h"
 
-/**
-* @brief Точка входа в программу
-* @return 0 программа успешно завершена
-*/
-int main()
-{       
-        std::string teacher1 = "А.И.Беляков";
+using namespace minobr::kingard;
+
+int main() {
+    try {
         
-        minobr::kingard::Teacher teacher(teacher1, 'М', 36, 100138);
+        auto teacher = Teacher::create("Иван Петров", 'M', 35, 101);
 
-        std::string name1 = "Группа Крови";
+        
+        auto group = Group::create("Младшая группа", teacher.get());
 
-        minobr::kingard::Group group_blood(name1, &teacher);
+        
+        auto baby1 = Baby::create("Анна Иванова", 'F', 5);
+        auto baby2 = Baby::create("Павел Сидоров", 'M', 4);
 
-        group_blood.add_child(std::make_unique<minobr::kingard::Baby>("Шилейковский Владислав Андреевич", 'М', 5));
-        group_blood.add_child(std::make_unique<minobr::kingard::Baby>("Василенко Данил Вячеславович", 'М', 2));
-        group_blood.add_child(std::make_unique<minobr::kingard::Baby>("Перминова Ульяна Николаевна", 'Ж', 6));
+        
+        group->add_child(baby1);
+        group->add_child(baby2);
 
-        minobr::kingard::Schedule schedule;
-        schedule.set_schedule("Понедельник", name1, { "Музыка", "Ядерная физика" });
-        schedule.set_schedule("Вторник", name1, { "Art", "Music" });
+       
+        std::cout << "Список детей в группе:\n";
+        for (const auto& child : group->get_children()) {
+            std::cout << " - " << child->to_string() << "\n";
+        }
 
-        std::cout << group_blood.to_string() << "\n";
-        std::cout << group_blood.get_children() << "\n";
-        std::cout << group_blood.get_children_by_age(2) << "\n";
+        
+        Schedule schedule;
 
-        std::cout << schedule.to_string() << "\n";
+        
+        auto entry = schedule.createEntry("Понедельник", "10:00");
+        schedule.addGroupToEntry(entry, group);
+        schedule.addActivityToEntry(entry, "Рисование");
 
-        return 0;
+        
+        std::cout << "\nРасписание:\n" << schedule.to_string() << "\n";
+
+        
+        auto activities = schedule.getActivitiesForGroup(group, "Понедельник");
+        std::cout << "\nЗанятия группы в понедельник:\n";
+        for (const auto& activity : activities) {
+            std::cout << " - " << activity << "\n";
+        }
+
+        
+        schedule.removeEntry(group, "Понедельник", entry->time);
+
+        
+        std::cout << "\nРасписание после удаления записи:\n" << schedule.to_string() << "\n";
+
+    }
+    catch (const std::exception& ex) {
+        std::cerr << "Ошибка: " << ex.what() << "\n";
+        return 1;
+    }
+
+    return 0;
 }

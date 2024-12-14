@@ -1,78 +1,82 @@
 #include "Group.h"
+#include <stdexcept>
 #include <sstream>
+#include <algorithm>
 
 namespace minobr::kingard
 {
-	Group::Group(const std::string& name, const std::shared_ptr<Teacher>& educator)
-		: name_group(name), teacher(educator) {
-	}
+    Group::Group(const std::string& name, Teacher* educator)
+        : name_group(name), teacher(educator)
+    {
+        if (!educator) {
+            throw std::invalid_argument("Указатель на воспитателя не может быть пустым");
+        }
+    }
 
-	void Group::add_child(const std::shared_ptr<Baby>& child) {
-		babies.push_back(child);
-		child->set_group(shared_from_this());
-	}
-	
-	std::optional<std::shared_ptr<Baby>> Group::get_baby_at() const
-	{
-		if (!babies.empty()) {
-			return babies[0];
-		}
-		else {
-			return std::nullopt; 
-		}
-	}
+    std::shared_ptr<Group> Group::create(const std::string& name, Teacher* educator)
+    {
+        return std::shared_ptr<Group>(new Group(name, educator));
+    }
 
-	const std::vector<std::shared_ptr<Baby>>& Group::get_children() const {
-		return babies;
-	}
+    void Group::add_child(const std::shared_ptr<Baby>& child)
+    {
+        if (!child) {
+            throw std::invalid_argument("Указатель на ребенка не может быть пустым");
+        }
+        babies.push_back(child);
+        child->set_group(this);
+    }
 
-	std::shared_ptr<Teacher> Group::get_teacher() const {
-		return teacher;
-	}
+    std::optional<std::shared_ptr<Baby>> Group::get_baby_at(size_t index) const
+    {
+        if (index < babies.size()) {
+            return babies[index];
+        }
+        return std::nullopt;
+    }
 
-	double Group::male_female_ratio() const {
-		if (babies.empty()) {
-			return 0.0;
-		}
+    const std::vector<std::shared_ptr<Baby>>& Group::get_children() const
+    {
+        return babies;
+    }
 
-		int male_count = 0;
-		for (const auto& baby : babies) {
-			if (baby->gender == 'М') {
-				male_count++;
-			}
-		}
+    std::shared_ptr<Teacher> Group::get_teacher() const
+    {
+        return teacher;
+    }
 
-		int female_count = babies.size() - male_count;
-		if (female_count == 0)
-		{
-			return INFINITY;
-		}
-		return (male_count / female_count) * 100;
-	}
+    double Group::male_female_ratio() const
+    {
+        if (babies.empty()) {
+            return 0.0;
+        }
 
-	std::vector<std::shared_ptr<Baby>> Group::get_children_by_age(int inputed_age) const {
-		std::vector<std::shared_ptr<Baby>> filtered_children;
+        size_t male_count = std::count_if(babies.begin(), babies.end(),
+            [](const std::shared_ptr<Baby>& baby) { return baby->get_gender() == 'М'; });
 
-		auto it = babies.begin();
-		while ((it = std::find_if(it, babies.end(), [inputed_age](const std::shared_ptr<Baby>& baby) 
-			{
-				return baby->age() == inputed_age;
-			})) != babies.end()) 
-		{
-			filtered_children.push_back(*it); 
-			++it;
-		}
+        size_t female_count = babies.size() - male_count;
+        if (female_count == 0) {
+            return INFINITY;
+        }
 
-		return filtered_children;
-	}
+        return static_cast<double>(male_count) / female_count * 100.0;
+    }
 
-	std::string Group::to_string() const {
-		std::ostringstream oss;
+    std::vector<std::shared_ptr<Baby>> Group::get_children_by_age(int inputed_age) const
+    {
+        std::vector<std::shared_ptr<Baby>> filtered_children;
+        for (const auto& baby : babies) {
+            if (baby->get_age() == inputed_age) {
+                filtered_children.push_back(baby);
+            }
+        }
+        return filtered_children;
+    }
 
-		oss << "Имя группы: " << name_group << "\n";
-
-		oss << "Воспитатель: " << (get_teacher()->fio) << "\n";
-
-		oss << "Соотношение мальчиков и девочек(в %): " << male_female_ratio() << "\n";
-	}
+    std::string Group::to_string() const {
+        std::ostringstream oss;
+        oss << "Group name: " << name_group << ", Teacher: "
+            << (teacher ? teacher->get_fio() : "None");
+        return oss.str();
+    }
 }

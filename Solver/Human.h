@@ -7,12 +7,12 @@ namespace minobr::kingard
 	{
 	private:
 
-		char male = 'М';
-		char female = 'Ж';
+		static constexpr char male = 'M';
+		static constexpr char female = 'F';
 
 	protected:
-		int age;
 		std::string fio;
+		int age;
 		char gender;
 
 	public:
@@ -20,6 +20,10 @@ namespace minobr::kingard
 		* @brief Конструктор
 		*/
 		Human(int age, const std::string& name, char is_gender);
+
+		int get_age() const { return age; }
+		const std::string& get_fio() const { return fio; }
+		char get_gender() const { return gender; }
 
 	};
 

@@ -1,63 +1,68 @@
 #pragma once
 #include <vector>
 #include <memory>
-#include <cmath>
 #include <optional>
+#include <string>
+#include <cmath>
 #include "Baby.h"
 #include "Teacher.h"
 
-namespace minobr::kingard {
-	class Group : public std::enable_shared_from_this<Group>
-	{
-	private:
+namespace minobr::kingard
+{
+    class Baby;
+    class Teacher;
 
-		std::string name_group;
-		std::vector<Baby*> babies; 
-		std::shared_ptr<Teacher> teacher;
+    class Group : public std::enable_shared_from_this<Group>
+    {
+    private:
+        std::string name_group;                         
+        std::vector<std::shared_ptr<Baby>> babies;       
+        std::shared_ptr<Teacher> teacher;               
 
-	public:
+        /**
+         * @brief Приватный конструктор
+         */
+        Group(const std::string& name, Teacher* educator);
 
-		/**
-		* @brief Конструктор
-		* @param name имя группы
-		* @param educator указатель на элемент класса учитель
-		*/
-		Group(const std::string& name, const std::shared_ptr<Teacher>& educator);
+    public:
+        /**
+         * @brief Статический метод для создания объекта Group
+         */
+        static std::shared_ptr<Group> create(const std::string& name, Teacher* educator);
 
-		/**
-		* @brief Проверка на заполненость массива std::vector<std::shared_ptr<Baby>> babies
-		*/
-		std::optional<std::shared_ptr<Baby>> get_baby_at() const;
+        /**
+         * @brief Добавление ребенка в группу
+         */
+        void add_child(const std::shared_ptr<Baby>& child);
 
-		/**
-		* @brief функция добавления детей в группу
-		* @param child умный указатель на элемент класса Baby
-		*/
-		void add_child(const std::shared_ptr<Baby>& child);
+        /**
+         * @brief Возвращает ребенка по индексу
+         */
+        std::optional<std::shared_ptr<Baby>> get_baby_at(size_t index) const;
 
-		/**
-		* @brief выводит список детей данной группы
-		*/
-		const std::vector<std::shared_ptr<Baby>>& get_children() const;
+        /**
+         * @brief Получение списка всех детей в группе
+         */
+        const std::vector<std::shared_ptr<Baby>>& get_children() const;
 
-		/**
-		* @brief выводит прикрепленного учителя
-		*/
-		std::shared_ptr<Teacher> get_teacher() const;
+        /**
+         * @brief Получение воспитателя группы
+         */
+        std::shared_ptr<Teacher> get_teacher() const;
 
-		/**
-		* @brief вычисляет соотношение мальчиков и девочек в группе
-		*/
-		double male_female_ratio() const;
+        /**
+         * @brief Расчет соотношения мальчиков и девочек
+         */
+        double male_female_ratio() const;
 
-		/**
-		* @brief вывод списка детей по возрасту
-		*/
-		std::vector<std::shared_ptr<Baby>> get_children_by_age(int inputed_age) const;
+        /**
+         * @brief Фильтрация детей по возрасту
+         */
+        std::vector<std::shared_ptr<Baby>> get_children_by_age(int inputed_age) const;
 
-		/**
-		* @brief объединеный метод сериализации в строку
-		*/
-		std::string to_string() const;
-	};
+        /**
+         * @brief Сериализация данных группы в строку
+         */
+        std::string to_string() const;
+    };
 }
