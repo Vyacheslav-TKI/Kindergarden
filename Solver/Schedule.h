@@ -69,5 +69,7 @@ namespace minobr::kingard {
          * @return Строковое представление расписания
          */
         std::string to_string() const;
+
+        ~Schedule();
     };
 }

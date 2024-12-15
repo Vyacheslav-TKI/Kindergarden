@@ -15,6 +15,9 @@ namespace minobr::kingard
 
     std::shared_ptr<Group> Group::create(const std::string& name, Teacher* educator)
     {
+        if (!educator) {
+            throw std::invalid_argument("Учитель не может быть пустым");
+        }
         return std::shared_ptr<Group>(new Group(name, educator));
     }
 
@@ -79,4 +82,6 @@ namespace minobr::kingard
             << (teacher ? teacher->get_fio() : "None");
         return oss.str();
     }
+
+    Group::~Group() = default;
 }

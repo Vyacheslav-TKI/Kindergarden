@@ -24,6 +24,9 @@ namespace minobr::kingard {
 
     
     void Baby::set_group(Group* group) {
+        if (!group) {
+            throw std::invalid_argument("Указатель на группу не может быть пустым");
+        }
         this->group = group;
     }
 }

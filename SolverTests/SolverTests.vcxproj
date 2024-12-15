@@ -164,8 +164,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="GroupTests.cpp" />
-    <ClCompile Include="ScheduleTests.cpp" />
+    <ClCompile Include="BabyTests.cpp" />
+    <ClCompile Include="TeacherTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Solver\Solver.vcxproj">

@@ -9,6 +9,10 @@ namespace minobr::kingard
 
     std::shared_ptr<Teacher> Teacher::create(const std::string& fio_inputed, char gender_inputed, int age_inputed, size_t id_inputed)
     {
+        if (age_inputed < 18) {
+            throw std::invalid_argument("Возраст преподавателя должен быть не менее 18 лет");
+        }
+
         return std::shared_ptr<Teacher>(new Teacher(fio_inputed, gender_inputed, age_inputed, id_inputed));
     }
 

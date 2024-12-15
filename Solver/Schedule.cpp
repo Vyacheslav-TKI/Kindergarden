@@ -74,4 +74,6 @@ namespace minobr::kingard {
         }
         return ss.str();
     }
+
+    Schedule::~Schedule() = default;
 }

@@ -64,5 +64,7 @@ namespace minobr::kingard
          * @brief Сериализация данных группы в строку
          */
         std::string to_string() const;
+
+        ~Group();
     };
 }
