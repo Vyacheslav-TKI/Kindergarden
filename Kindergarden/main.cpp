@@ -32,28 +32,28 @@ int main() {
         }
 
         
-        Schedule schedule;
+        auto schedule = minobr::kingard::Schedule::create();
 
         
-        auto entry = schedule.createEntry("Понедельник", "10:00");
-        schedule.addGroupToEntry(entry, group);
-        schedule.addActivityToEntry(entry, "Рисование");
+        auto entry = schedule->createEntry("Понедельник", "10:00");
+        schedule->addGroupToEntry(entry, group);
+        schedule->addActivityToEntry(entry, "Рисование");
 
         
-        std::cout << "\nРасписание:\n" << schedule.to_string() << "\n";
+        std::cout << "\nРасписание:\n" << schedule->to_string() << "\n";
 
         
-        auto activities = schedule.getActivitiesForGroup(group, "Понедельник");
+        auto activities = schedule->getActivitiesForGroup(group, "Понедельник");
         std::cout << "\nЗанятия группы в понедельник:\n";
         for (const auto& activity : activities) {
             std::cout << " - " << activity << "\n";
         }
 
         
-        schedule.removeEntry(group, "Понедельник", entry->time);
+        schedule->removeEntry(group, "Понедельник", entry->time);
 
         
-        std::cout << "\nРасписание после удаления записи:\n" << schedule.to_string() << "\n";
+        std::cout << "\nРасписание после удаления записи:\n" << schedule->to_string() << "\n";
 
     }
     catch (const std::exception& ex) {

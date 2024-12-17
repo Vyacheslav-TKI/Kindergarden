@@ -6,8 +6,25 @@
 
 namespace minobr::kingard {
 
-    ScheduleEntry::ScheduleEntry(const std::string& day, const std::chrono::system_clock::time_point& time)
-        : day(day), time(time) {
+    std::chrono::minutes parseTimeToMinutes(const std::string& time) {
+        std::istringstream timeStream(time);
+        int hours, minutes;
+        char delimiter;
+
+        timeStream >> hours >> delimiter >> minutes;
+
+        if (timeStream.fail() || delimiter != ':' || hours < 0 || hours > 23 || minutes < 0 || minutes > 59) {
+            throw std::invalid_argument("Неверный формат времени. Ожидалось HH:MM");
+        }
+
+        return std::chrono::hours(hours) + std::chrono::minutes(minutes);
+    }
+
+    ScheduleEntry::ScheduleEntry(const std::string& day, const std::string& time)
+        : day(day), time(parseTimeToMinutes(time)) {}
+
+    std::unique_ptr<Schedule> Schedule::create() {
+        return std::make_unique<Schedule>();
     }
 
     std::shared_ptr<ScheduleEntry> Schedule::createEntry(const std::string& day, const std::string& time) {
@@ -59,21 +76,39 @@ namespace minobr::kingard {
     }
 
     std::string Schedule::to_string() const {
-        std::ostringstream ss;
+        std::ostringstream oss;
+
+        if (entries.empty()) {
+            oss << "Расписание пусто.\n";
+            return oss.str();
+        }
+
+        
         for (const auto& entry : entries) {
             if (entry) {
-                auto t = std::chrono::system_clock::to_time_t(entry->time);
-                std::tm tm;
-                localtime_s(&tm, &t);
+                
+                oss << "День: " << entry->day << "\n";
 
-                ss << "Group: " << (entry->group ? entry->group->to_string() : "None")
-                    << ", Activity: " << entry->activity
-                    << ", Day: " << entry->day
-                    << ", Time: " << std::put_time(&tm, "%H:%M") << "\n";
+                
+                if (entry->group) {
+                    oss << "Группа: " << entry->group->to_string() << "\n";
+                }
+                else {
+                    oss << "Группа: не указана\n";
+                }
+
+                
+                oss << "Занятие: " << entry->activity << "\n";
+
+                
+                auto duration = entry->time; 
+                int hours = std::chrono::duration_cast<std::chrono::hours>(duration).count();
+                int minutes = std::chrono::duration_cast<std::chrono::minutes>(duration % std::chrono::hours(1)).count();
+                oss << "Время: " << std::setfill('0') << std::setw(2) << hours
+                    << ":" << std::setfill('0') << std::setw(2) << minutes << "\n";
             }
         }
-        return ss.str();
-    }
 
-    Schedule::~Schedule() = default;
+        return oss.str();
+    }
 }

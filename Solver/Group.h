@@ -12,7 +12,7 @@ namespace minobr::kingard
     class Baby;
     class Teacher;
 
-    class Group : public std::enable_shared_from_this<Group>
+    class Group final: public std::enable_shared_from_this<Group>
     {
     private:
         std::string name_group;                         
@@ -34,6 +34,12 @@ namespace minobr::kingard
          * @brief Добавление ребенка в группу
          */
         void add_child(const std::shared_ptr<Baby>& child);
+
+        /**
+        * @brief Удаляет ребенка из группы
+        * @param child Указатель на ребенка, которого нужно удалить
+         */
+        void remove_child(const std::shared_ptr<Baby>& child);
 
         /**
          * @brief Возвращает ребенка по индексу
@@ -64,7 +70,5 @@ namespace minobr::kingard
          * @brief Сериализация данных группы в строку
          */
         std::string to_string() const;
-
-        ~Group();
     };
 }

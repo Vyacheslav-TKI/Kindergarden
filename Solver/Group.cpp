@@ -48,6 +48,18 @@ namespace minobr::kingard
         return teacher;
     }
 
+    void Group::remove_child(const std::shared_ptr<Baby>& child) {
+        if (!child) {
+            throw std::invalid_argument("Передан пустой указатель на ребенка");
+        }
+
+        auto it = std::find(babies.begin(), babies.end(), child);
+        if (it != babies.end()) {
+            babies.erase(it);
+            child->set_group(nullptr);
+        }
+    }
+
     double Group::male_female_ratio() const
     {
         if (babies.empty()) {
@@ -82,6 +94,4 @@ namespace minobr::kingard
             << (teacher ? teacher->get_fio() : "None");
         return oss.str();
     }
-
-    Group::~Group() = default;
 }

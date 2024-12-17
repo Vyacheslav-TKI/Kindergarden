@@ -11,19 +11,21 @@ namespace minobr::kingard {
         std::shared_ptr<Group> group; 
         std::string day;              
         std::string activity;         
-        std::chrono::system_clock::time_point time; 
+        std::chrono::minutes time;
 
         /**
          * @brief Конструктор
          * @param day День недели
          * @param time Время занятия
          */
-        ScheduleEntry(const std::string& day, const std::chrono::system_clock::time_point& time);
+        ScheduleEntry(const std::string& day, const std::string& time);
     };
 
     class Schedule {
     private:
         std::vector<std::shared_ptr<ScheduleEntry>> entries; 
+
+        Schedule() = default;
 
     public:
         /**
@@ -33,6 +35,12 @@ namespace minobr::kingard {
          * @return Умный указатель на созданную запись
          */
         std::shared_ptr<ScheduleEntry> createEntry(const std::string& day, const std::string& time);
+
+        /**
+         * @brief Создаёт объект Schedule через указатель
+         * @return Умный указатель на Schedule
+         */
+        static std::unique_ptr<Schedule> create();
 
         /**
          * @brief Добавляет группу к записи расписания
@@ -70,6 +78,5 @@ namespace minobr::kingard {
          */
         std::string to_string() const;
 
-        ~Schedule();
     };
 }
