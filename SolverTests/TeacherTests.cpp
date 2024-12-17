@@ -14,7 +14,7 @@ namespace KindergardenTests
         TEST_METHOD(CreateTeacher_ValidData_Success)
         {
             
-            std::string fio = "Иван Петров";
+            std::string fio = "РРІР°РЅ РџРµС‚СЂРѕРІ";
             char gender = 'M';
             int age = 30;
             size_t id = 101;
@@ -31,7 +31,7 @@ namespace KindergardenTests
         TEST_METHOD(CreateTeacher_InvalidAge_ThrowsException)
         {
             
-            std::string fio = "Иван Петров";
+            std::string fio = "РРІР°РЅ РџРµС‚СЂРѕРІ";
             char gender = 'M';
             int age = 15; 
             size_t id = 101;

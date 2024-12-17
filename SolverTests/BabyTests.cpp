@@ -14,7 +14,7 @@ namespace KindergardenTests
 
         TEST_METHOD(CreateBaby_ValidData_Success)
         {
-            std::string fio = "Àííà Èâàíîâà";
+            std::string fio = "ĞĞ½Ğ½Ğ° Ğ˜Ğ²Ğ°Ğ½Ğ¾Ğ²Ğ°";
             char gender = 'F';
             int age = 5;
 
@@ -27,7 +27,7 @@ namespace KindergardenTests
 
         TEST_METHOD(CreateBaby_InvalidAge_ThrowsException)
         {
-            std::string fio = "Àííà Èâàíîâà";
+            std::string fio = "ĞĞ½Ğ½Ğ° Ğ˜Ğ²Ğ°Ğ½Ğ¾Ğ²Ğ°";
             char gender = 'F';
             int age = 1;
 
@@ -39,9 +39,9 @@ namespace KindergardenTests
         TEST_METHOD(AddBabyToGroup_Success)
         {
             
-            auto teacher = Teacher::create("Èâàí Ïåòğîâ", 'M', 35, 101);
-            auto group = Group::create("Ìëàäøàÿ ãğóïïà", teacher.get());
-            auto baby = Baby::create("Àííà Èâàíîâà", 'F', 5);
+            auto teacher = Teacher::create("Ğ˜Ğ²Ğ°Ğ½ ĞŸĞµÑ‚Ñ€Ğ¾Ğ²", 'M', 35, 101);
+            auto group = Group::create("ĞœĞ»Ğ°Ğ´ÑˆĞ°Ñ Ğ³Ñ€ÑƒĞ¿Ğ¿Ğ°", teacher.get());
+            auto baby = Baby::create("ĞĞ½Ğ½Ğ° Ğ˜Ğ²Ğ°Ğ½Ğ¾Ğ²Ğ°", 'F', 5);
 
            
             group->add_child(baby);
@@ -54,9 +54,9 @@ namespace KindergardenTests
         TEST_METHOD(RemoveBabyFromGroup_Success)
         {
             
-            auto teacher = Teacher::create("Èâàí Ïåòğîâ", 'M', 35, 101);
-            auto group = Group::create("Ìëàäøàÿ ãğóïïà", teacher.get());
-            auto baby = Baby::create("Àííà Èâàíîâà", 'F', 5);
+            auto teacher = Teacher::create("Ğ˜Ğ²Ğ°Ğ½ ĞŸĞµÑ‚Ñ€Ğ¾Ğ²", 'M', 35, 101);
+            auto group = Group::create("ĞœĞ»Ğ°Ğ´ÑˆĞ°Ñ Ğ³Ñ€ÑƒĞ¿Ğ¿Ğ°", teacher.get());
+            auto baby = Baby::create("ĞĞ½Ğ½Ğ° Ğ˜Ğ²Ğ°Ğ½Ğ¾Ğ²Ğ°", 'F', 5);
 
             group->add_child(baby);
 
