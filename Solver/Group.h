@@ -22,13 +22,18 @@ namespace minobr::kingard
         /**
          * @brief Приватный конструктор
          */
-        Group(const std::string& name, Teacher* educator);
+        Group(const std::string& name);
 
     public:
         /**
          * @brief Статический метод для создания объекта Group
          */
-        static std::shared_ptr<Group> create(const std::string& name, Teacher* educator);
+        static std::shared_ptr<Group> create(const std::string& name);
+
+        /**
+        * @brief добавляет учителя в группу
+        */
+        void add_teacher(const std::weak_ptr<Teacher>& educator);
 
         /**
          * @brief Добавление ребенка в группу

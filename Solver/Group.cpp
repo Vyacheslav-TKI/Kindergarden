@@ -5,27 +5,25 @@
 
 namespace minobr::kingard
 {
-    Group::Group(const std::string& name, Teacher* educator)
-        : name_group(name), teacher(educator)
+    Group::Group(const std::string& name) : name_group(name){}
+
+    std::shared_ptr<Group> Group::create(const std::string& name)
     {
-        if (!educator) {
-            throw std::invalid_argument("Указатель на воспитателя не может быть пустым");
-        }
+        return std::shared_ptr<Group>(new Group(name));
     }
 
-    std::shared_ptr<Group> Group::create(const std::string& name, Teacher* educator)
-    {
-        if (!educator) {
-            throw std::invalid_argument("Учитель не может быть пустым");
+    void Group::add_teacher(const std::weak_ptr<Teacher>& educator) {
+        
+        if (auto sharedEducator = educator.lock()) {
+            teacher = sharedEducator; 
         }
-        return std::shared_ptr<Group>(new Group(name, educator));
+        else {
+            throw std::invalid_argument("Указанный учитель недействителен или не существует");
+        }
     }
 
     void Group::add_child(const std::shared_ptr<Baby>& child)
     {
-        if (!child) {
-            throw std::invalid_argument("Указатель на ребенка не может быть пустым");
-        }
         babies.push_back(child);
         child->set_group(this);
     }

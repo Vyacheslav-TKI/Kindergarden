@@ -14,7 +14,7 @@ namespace minobr::kingard {
         timeStream >> hours >> delimiter >> minutes;
 
         if (timeStream.fail() || delimiter != ':' || hours < 0 || hours > 23 || minutes < 0 || minutes > 59) {
-            throw std::invalid_argument("Неверный формат времени. Ожидалось HH:MM");
+            throw std::invalid_argument("РќРµРІРµСЂРЅС‹Р№ С„РѕСЂРјР°С‚ РІСЂРµРјРµРЅРё. РћР¶РёРґР°Р»РѕСЃСЊ HH:MM");
         }
 
         return std::chrono::hours(hours) + std::chrono::minutes(minutes);
@@ -51,6 +51,7 @@ namespace minobr::kingard {
 
     void Schedule::addGroupToEntry(const std::shared_ptr<ScheduleEntry>& entry, const std::shared_ptr<Group>& group) {
         entry->group = group;
+        group = shared_from_this();
     }
 
     void Schedule::addActivityToEntry(const std::shared_ptr<ScheduleEntry>& entry, const std::string& activity) {
@@ -79,7 +80,7 @@ namespace minobr::kingard {
         std::ostringstream oss;
 
         if (entries.empty()) {
-            oss << "Расписание пусто.\n";
+            oss << "Р Р°СЃРїРёСЃР°РЅРёРµ РїСѓСЃС‚Рѕ.\n";
             return oss.str();
         }
 
@@ -87,24 +88,24 @@ namespace minobr::kingard {
         for (const auto& entry : entries) {
             if (entry) {
                 
-                oss << "День: " << entry->day << "\n";
+                oss << "Р”РµРЅСЊ: " << entry->day << "\n";
 
                 
                 if (entry->group) {
-                    oss << "Группа: " << entry->group->to_string() << "\n";
+                    oss << "Р“СЂСѓРїРїР°: " << entry->group->to_string() << "\n";
                 }
                 else {
-                    oss << "Группа: не указана\n";
+                    oss << "Р“СЂСѓРїРїР°: РЅРµ СѓРєР°Р·Р°РЅР°\n";
                 }
 
                 
-                oss << "Занятие: " << entry->activity << "\n";
+                oss << "Р—Р°РЅСЏС‚РёРµ: " << entry->activity << "\n";
 
                 
                 auto duration = entry->time; 
                 int hours = std::chrono::duration_cast<std::chrono::hours>(duration).count();
                 int minutes = std::chrono::duration_cast<std::chrono::minutes>(duration % std::chrono::hours(1)).count();
-                oss << "Время: " << std::setfill('0') << std::setw(2) << hours
+                oss << "Р’СЂРµРјСЏ: " << std::setfill('0') << std::setw(2) << hours
                     << ":" << std::setfill('0') << std::setw(2) << minutes << "\n";
             }
         }

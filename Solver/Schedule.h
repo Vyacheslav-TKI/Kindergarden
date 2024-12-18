@@ -21,7 +21,7 @@ namespace minobr::kingard {
         ScheduleEntry(const std::string& day, const std::string& time);
     };
 
-    class Schedule {
+    class Schedule final : public std::enable_shared_from_this<Schedule> {
     private:
         std::vector<std::shared_ptr<ScheduleEntry>> entries; 
 
